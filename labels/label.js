@@ -107,7 +107,7 @@ function setup() {
         fields = records[i].split(','); //Not considering commas in fields
         yarns[i] = {"manufacturer":fields[0].trim(),
                     "product":fields[1].trim(),
-                    "fibers":[{}],
+                    "fibers":[],
                     "prices":{}};
 
         var offset = 0; //Used since the length of each record is unknown
