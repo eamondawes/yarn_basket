@@ -114,8 +114,8 @@ function setup() {
         var total_fiber_content = 0;
         while (total_fiber_content < 100) {
           yarns[i].fibers.push({"fiber":fields[2+offset].trim(),
-                                "fiber_pct":parseInt(fields[3+offset].trim())});
-          total_fiber_content += fields[3+offset].trim();
+                                "fiber_pct":parseFloat(fields[3+offset].trim())});
+          total_fiber_content += yarns[i].fibers.at(-1).fiber_pct;
           offset += 2;
         }
         yarns[i].yardage = fields[2+offset];
