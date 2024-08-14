@@ -42,7 +42,7 @@ function setup() {
 
       //A border of 1 is default, need to explicitly say 0
       label_fields.manufacturer.addToPage(page, {x:x_pt+6, y:y_pt+210, width: 336, height: 42, borderWidth: 0});
-      label_fields.product.addToPage(page, {x:x_pt+6, y:y_pt+154, width: 336, height: 66, borderWidth: 0});
+      label_fields.product.addToPage(page, {x:x_pt+6, y:y_pt+150, width: 336, height: 66, borderWidth: 0});
       label_fields.fiber.addToPage(page, {x:x_pt+6, y:y_pt+84, width: 336, height: 66, borderWidth: 0});
       label_fields.yardage.addToPage(page, {x:x_pt+6, y:y_pt+48, width: 336, height: 36, borderWidth: 0});
       label_fields.price.addToPage(page, {x:x_pt+6, y:y_pt+6, width: 336, height: 36, borderWidth: 0});
@@ -104,6 +104,11 @@ function setup() {
       var records = this.result.split(/\r\n|\n/); //Both depending on OS
 
       for (var i = 0; i < records.length; i++) {
+        records[i] = records[i].replace(/,+$/, ""); //Remove trailing commas
+        if (records[i].length < 2) {                //Remove empty row
+          continue;
+        }
+        
         fields = records[i].split(','); //Not considering commas in fields
         yarns[i] = {"manufacturer":fields[0].trim(),
                     "product":fields[1].trim(),
@@ -127,7 +132,7 @@ function setup() {
 
         //?? operator used to pass a "default" if no style is given
         while (fields.length > 3+offset) {
-          yarns[i].prices[fields[4+offset] ?? "default"] = fields[3+offset];
+          yarns[i].prices[fields[4+offset] ?? "default"] = parseFloat(fields[3+offset]).toFixed(2);
           offset += 2;
         } 
       }
