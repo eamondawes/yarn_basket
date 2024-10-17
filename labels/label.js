@@ -22,7 +22,7 @@ function setup() {
       }
       
       //Move x/y offset based on which of 4 label positions is required
-      var x_pt = i % 2 == 0 ? 24 : 420;
+      var x_pt = i % 2 == 0 ? 40 : 420;
       var y_pt = i % 4 > 1 ? 24 : 330;
       page.drawRectangle({x: x_pt,
                           y: y_pt,
