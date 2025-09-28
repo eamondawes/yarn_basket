@@ -138,6 +138,6 @@ function setup() {
       }
       make_pdf(yarns);
     };
-    reader.readAsText(input);
+    reader.readAsText(input, 'ISO-8859-1');
   });
 }
