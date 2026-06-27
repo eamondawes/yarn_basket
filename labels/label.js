@@ -6,6 +6,7 @@ function setup() {
     PDFDocument.registerFontkit(fontkit);
     const Font = await PDFDocument.embedFont(PDFLib.StandardFonts.Helvetica);
     const FontBold = await PDFDocument.embedFont(PDFLib.StandardFonts.HelveticaBold);
+    const FontOblique = await PDFDocument.embedFont(PDFLib.StandardFonts.HelveticaOblique);
     
     //All fields of a PDF live within the Form abstraction. A PDF should have at most one Form.
     form = PDFDocument.getForm();
@@ -37,14 +38,14 @@ function setup() {
       var label_fields = {"manufacturer":form.createTextField("manufacturer."+i),
                           "product":form.createTextField("product."+i),
                           "fiber":form.createTextField("fiber."+i),
-                          "yardage":form.createTextField("yardage."+i),
+                          "specifications":form.createTextField("specifications."+i), //Will include weight
                           "price":form.createTextField("price."+i)};
 
       //A border of 1 is default, need to explicitly say 0
       label_fields.manufacturer.addToPage(page, {x:x_pt+6, y:y_pt+210, width: 336, height: 42, borderWidth: 0});
       label_fields.product.addToPage(page, {x:x_pt+6, y:y_pt+150, width: 336, height: 66, borderWidth: 0});
       label_fields.fiber.addToPage(page, {x:x_pt+6, y:y_pt+84, width: 336, height: 66, borderWidth: 0});
-      label_fields.yardage.addToPage(page, {x:x_pt+6, y:y_pt+48, width: 336, height: 36, borderWidth: 0});
+      label_fields.specifications.addToPage(page, {x:x_pt+6, y:y_pt+48, width: 336, height: 36, borderWidth: 0});
       label_fields.price.addToPage(page, {x:x_pt+6, y:y_pt+6, width: 336, height: 36, borderWidth: 0});
 
       Object.keys(label_fields).forEach((k) => label_fields[k].setAlignment(PDFLib.TextAlignment.Center));
@@ -67,15 +68,18 @@ function setup() {
       label_fields.manufacturer.setText(yarns[i].manufacturer);
       label_fields.product.setText(yarns[i].product);
       label_fields.fiber.setText(fiber_content);
-      label_fields.yardage.setText(yarns[i].yardage+" yards");
+      label_fields.specifications.setText(yarns[i].yardage+" yards, "+yarns[i].weight);
       label_fields.price.setText(price);
 
       //updateAppearances() needs to be the last operation
-      const bold_fields = ["product", "price"];
-      Object.keys(label_fields).forEach((k) => (bold_fields.includes(k)) 
-                                              ? label_fields[k].updateAppearances(FontBold)
-                                              : label_fields[k].updateAppearances(Font));
-
+      
+      label_fields["product"].updateAppearances(FontBold);
+      label_fields["price"].updateAppearances(FontBold);
+      
+      label_fields["specifications"].updateAppearances(FontOblique);
+      
+      label_fields["manufacturer"].updateAppearances(Font);
+      label_fields["fiber"].updateAppearances(Font);
     }
 
     //This is what applies all the styling that has been set above
@@ -129,10 +133,12 @@ function setup() {
         if (yarns[i].yardage.includes('m')) {
           yarns[i].yardage = String(Math.round(parseInt(yarns[i].yardage.slice(0,-1)) * 1.09361));
         }
+        
+        yarns[i].weight = fields[3+offset];
 
         //?? operator used to pass a "default" if no style is given
-        while (fields.length > 3+offset) {
-          yarns[i].prices[fields[4+offset] ?? "default"] = parseFloat(fields[3+offset]).toFixed(2);
+        while (fields.length > 4+offset) {
+          yarns[i].prices[fields[5+offset] ?? "default"] = parseFloat(fields[4+offset]).toFixed(2);
           offset += 2;
         } 
       }

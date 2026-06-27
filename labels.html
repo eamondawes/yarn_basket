@@ -29,33 +29,33 @@
 <details><summary>How To Use</summary>
 
 <p>The expected <code>.csv</code> format is:</p>
-<pre><code>&lt;manufacturer&gt;,&lt;product&gt;,(&lt;fiber&gt;,&lt;fiber_pecentage&gt;,)...&lt;yardage&gt;,(&lt;price&gt;[,&lt;style&gt;])...
+<pre><code>&lt;manufacturer&gt;,&lt;product&gt;,(&lt;fiber&gt;,&lt;fiber_pecentage&gt;,)...&lt;yardage&gt;,&lt;weight&gt;,(&lt;price&gt;[,&lt;style&gt;])...
 </code></pre>
 
 <p>For example:</p>
 
-<pre><code>Cascade Yarns,Anthem,Acrylic,100,186,6.00
+<pre><code>Cascade Yarns,Anthem,Acrylic,100,170m,Worsted,6.00
 </code></pre>
 
 <p>Leading and trailing spaces will be removed. For yarns that are composed of multiple fibers, include additional <code>&lt;fiber&gt;,&lt;fiber_percentage&gt;</code> pairs as needed until the total percentage is 100. For example:</p>
 
-<pre><code>Symfonie,Terra,Superwash Merino,75,Nylon,25,415,20.00
+<pre><code>Symfonie,Terra,Superwash Merino,75,Nylon,25,415,Lace,20.00
 </code></pre>
 
 <p>If an <code>m</code> is appended to a <code>&lt;yardage&gt;</code> field, it will be interpreted as meters and rounded to the nearest yard for the label.</p>
 
 <p>More than one <code>&lt;price&gt;</code> field can be added between <code>&lt;style&gt;</code> fields. This is when multiple SKUs should go on the same label. For example:</p>
 
-<pre><code>Berroco,Comfort DK,Super Fine Acrylic,50,Super Fine Nylon,50,178,5.00,Prints,4.75,Solids</code></pre>
+<pre><code>Berroco,Comfort DK,Super Fine Acrylic,50,Super Fine Nylon,50,178,DK,5.00,Prints,4.75,Solids</code></pre>
 
 </details>
 
 <details><summary>Example</summary>
 <p>This <code>.csv</code> file generates the subsequent <code>.pdf</code> document:</p>
 
-<pre><code>Cascade Yarns,Anthem,Acrylic,100,170m,6.00
-Symfonie,Terra,Superwash Merino,75,Nylon,25,415,20.00
-Berroco,Comfort DK,Super Fine Acrylic,50,Super Fine Nylon,50,178,5.00,Prints,4.75,Solids
+<pre><code>Cascade Yarns,Anthem,Acrylic,100,170m,Worsted,6.00
+Symfonie,Terra,Superwash Merino,75,Nylon,25,415,Lace,20.00
+Berroco,Comfort DK,Super Fine Acrylic,50,Super Fine Nylon,50,178,DK,5.00,Prints,4.75,Solids
 </code></pre>
 
 <p><img src="labels/example_screenshot.jpg"/></p>
